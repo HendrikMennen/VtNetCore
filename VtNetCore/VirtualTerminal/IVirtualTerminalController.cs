@@ -1,7 +1,6 @@
 ﻿namespace VtNetCore.VirtualTerminal
 {
     using VtNetCore.VirtualTerminal.Enums;
-    using VtNetCore.XTermParser;
 
     /// <summary>
     /// Provides the interfaces needed by a terminal in order to manipulate the model.

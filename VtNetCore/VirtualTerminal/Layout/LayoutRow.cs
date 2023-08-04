@@ -1,8 +1,6 @@
 ﻿namespace VtNetCore.VirtualTerminal.Layout
 {
-    using System;
     using System.Collections.Generic;
-    using System.Text;
 
     public class LayoutRow
     {

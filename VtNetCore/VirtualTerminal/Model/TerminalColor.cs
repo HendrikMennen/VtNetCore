@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using VtNetCore.VirtualTerminal.Enums;
 
 namespace VtNetCore.VirtualTerminal.Model

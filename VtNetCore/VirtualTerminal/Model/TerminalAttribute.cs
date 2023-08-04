@@ -1,6 +1,5 @@
 ﻿namespace VtNetCore.VirtualTerminal.Model
 {
-    using System;
     using VtNetCore.VirtualTerminal.Enums;
 
     /// <summary>
