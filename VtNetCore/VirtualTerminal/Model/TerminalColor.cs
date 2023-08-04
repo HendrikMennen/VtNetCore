@@ -6,141 +6,92 @@ namespace VtNetCore.VirtualTerminal.Model
 {
     public class TerminalColor
     {
-        public uint ARGB { get; set; }
-
-        public TerminalColor()
-        {
-        }
-
-        public TerminalColor(TerminalColor other)
-        {
-            ARGB = other.ARGB;
-        }
-
-        public TerminalColor(string webColor)
-        {
-            Red = Convert.ToUInt32(webColor.Substring(1, 2), 16);
-            Green = Convert.ToUInt32(webColor.Substring(3, 2), 16);
-            Blue = Convert.ToUInt32(webColor.Substring(5, 2), 16);
-        }
-
-        public TerminalColor(ETerminalColor color, bool bright)
-        {
-            Set(color, bright);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (this == null && obj == null)
-                return true;
-
-            if (this == null || obj == null)
-                return false;
-
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            var other = obj as TerminalColor;
-
-            return ARGB == other.ARGB;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return WebColor;
-        }
-
         public static readonly Dictionary<int, TerminalColor> Iso8613 = new Dictionary<int, TerminalColor>
         {
-            {  16, new TerminalColor("#000000") }, // Grey0
-            {  17, new TerminalColor("#00005f") }, // NavyBlue
-            {  18, new TerminalColor("#000087") }, // DarkBlue
-            {  19, new TerminalColor("#0000af") }, // Blue3
-            {  20, new TerminalColor("#0000d7") }, // Blue3
-            {  21, new TerminalColor("#0000ff") }, // Blue1
-            {  22, new TerminalColor("#005f00") }, // DarkGreen
-            {  23, new TerminalColor("#005f5f") }, // DeepSkyBlue4
-            {  24, new TerminalColor("#005f87") }, // DeepSkyBlue4
-            {  25, new TerminalColor("#005faf") }, // DeepSkyBlue4
-            {  26, new TerminalColor("#005fd7") }, // DodgerBlue3
-            {  27, new TerminalColor("#005fff") }, // DodgerBlue2
-            {  28, new TerminalColor("#008700") }, // Green4
-            {  29, new TerminalColor("#00875f") }, // SpringGreen4
-            {  30, new TerminalColor("#008787") }, // Turquoise4
-            {  31, new TerminalColor("#0087af") }, // DeepSkyBlue3
-            {  32, new TerminalColor("#0087d7") }, // DeepSkyBlue3
-            {  33, new TerminalColor("#0087ff") }, // DodgerBlue1
-            {  34, new TerminalColor("#00af00") }, // Green3
-            {  35, new TerminalColor("#00af5f") }, // SpringGreen3
-            {  36, new TerminalColor("#00af87") }, // DarkCyan
-            {  37, new TerminalColor("#00afaf") }, // LightSeaGreen
-            {  38, new TerminalColor("#00afd7") }, // DeepSkyBlue2
-            {  39, new TerminalColor("#00afff") }, // DeepSkyBlue1
-            {  40, new TerminalColor("#00d700") }, // Green3
-            {  41, new TerminalColor("#00d75f") }, // SpringGreen3
-            {  42, new TerminalColor("#00d787") }, // SpringGreen2
-            {  43, new TerminalColor("#00d7af") }, // Cyan3
-            {  44, new TerminalColor("#00d7d7") }, // DarkTurquoise
-            {  45, new TerminalColor("#00d7ff") }, // Turquoise2
-            {  46, new TerminalColor("#00ff00") }, // Green1
-            {  47, new TerminalColor("#00ff5f") }, // SpringGreen2
-            {  48, new TerminalColor("#00ff87") }, // SpringGreen1
-            {  49, new TerminalColor("#00ffaf") }, // MediumSpringGreen
-            {  50, new TerminalColor("#00ffd7") }, // Cyan2
-            {  51, new TerminalColor("#00ffff") }, // Cyan1
-            {  52, new TerminalColor("#5f0000") }, // DarkRed
-            {  53, new TerminalColor("#5f005f") }, // DeepPink4
-            {  54, new TerminalColor("#5f0087") }, // Purple4
-            {  55, new TerminalColor("#5f00af") }, // Purple4
-            {  56, new TerminalColor("#5f00d7") }, // Purple3
-            {  57, new TerminalColor("#5f00ff") }, // BlueViolet
-            {  58, new TerminalColor("#5f5f00") }, // Orange4
-            {  59, new TerminalColor("#5f5f5f") }, // Grey37
-            {  60, new TerminalColor("#5f5f87") }, // MediumPurple4
-            {  61, new TerminalColor("#5f5faf") }, // SlateBlue3
-            {  62, new TerminalColor("#5f5fd7") }, // SlateBlue3
-            {  63, new TerminalColor("#5f5fff") }, // RoyalBlue1
-            {  64, new TerminalColor("#5f8700") }, // Chartreuse4
-            {  65, new TerminalColor("#5f875f") }, // DarkSeaGreen4
-            {  66, new TerminalColor("#5f8787") }, // PaleTurquoise4
-            {  67, new TerminalColor("#5f87af") }, // SteelBlue
-            {  68, new TerminalColor("#5f87d7") }, // SteelBlue3
-            {  69, new TerminalColor("#5f87ff") }, // CornflowerBlue
-            {  70, new TerminalColor("#5faf00") }, // Chartreuse3
-            {  71, new TerminalColor("#5faf5f") }, // DarkSeaGreen4
-            {  72, new TerminalColor("#5faf87") }, // CadetBlue
-            {  73, new TerminalColor("#5fafaf") }, // CadetBlue
-            {  74, new TerminalColor("#5fafd7") }, // SkyBlue3
-            {  75, new TerminalColor("#5fafff") }, // SteelBlue1
-            {  76, new TerminalColor("#5fd700") }, // Chartreuse3
-            {  77, new TerminalColor("#5fd75f") }, // PaleGreen3
-            {  78, new TerminalColor("#5fd787") }, // SeaGreen3
-            {  79, new TerminalColor("#5fd7af") }, // Aquamarine3
-            {  80, new TerminalColor("#5fd7d7") }, // MediumTurquoise
-            {  81, new TerminalColor("#5fd7ff") }, // SteelBlue1
-            {  82, new TerminalColor("#5fff00") }, // Chartreuse2
-            {  83, new TerminalColor("#5fff5f") }, // SeaGreen2
-            {  84, new TerminalColor("#5fff87") }, // SeaGreen1
-            {  85, new TerminalColor("#5fffaf") }, // SeaGreen1
-            {  86, new TerminalColor("#5fffd7") }, // Aquamarine1
-            {  87, new TerminalColor("#5fffff") }, // DarkSlateGray2
-            {  88, new TerminalColor("#870000") }, // DarkRed
-            {  89, new TerminalColor("#87005f") }, // DeepPink4
-            {  90, new TerminalColor("#870087") }, // DarkMagenta
-            {  91, new TerminalColor("#8700af") }, // DarkMagenta
-            {  92, new TerminalColor("#8700d7") }, // DarkViolet
-            {  93, new TerminalColor("#8700ff") }, // Purple
-            {  94, new TerminalColor("#875f00") }, // Orange4
-            {  95, new TerminalColor("#875f5f") }, // LightPink4
-            {  96, new TerminalColor("#875f87") }, // Plum4
-            {  97, new TerminalColor("#875faf") }, // MediumPurple3
-            {  98, new TerminalColor("#875fd7") }, // MediumPurple3
-            {  99, new TerminalColor("#875fff") }, // SlateBlue1
+            { 16, new TerminalColor("#000000") }, // Grey0
+            { 17, new TerminalColor("#00005f") }, // NavyBlue
+            { 18, new TerminalColor("#000087") }, // DarkBlue
+            { 19, new TerminalColor("#0000af") }, // Blue3
+            { 20, new TerminalColor("#0000d7") }, // Blue3
+            { 21, new TerminalColor("#0000ff") }, // Blue1
+            { 22, new TerminalColor("#005f00") }, // DarkGreen
+            { 23, new TerminalColor("#005f5f") }, // DeepSkyBlue4
+            { 24, new TerminalColor("#005f87") }, // DeepSkyBlue4
+            { 25, new TerminalColor("#005faf") }, // DeepSkyBlue4
+            { 26, new TerminalColor("#005fd7") }, // DodgerBlue3
+            { 27, new TerminalColor("#005fff") }, // DodgerBlue2
+            { 28, new TerminalColor("#008700") }, // Green4
+            { 29, new TerminalColor("#00875f") }, // SpringGreen4
+            { 30, new TerminalColor("#008787") }, // Turquoise4
+            { 31, new TerminalColor("#0087af") }, // DeepSkyBlue3
+            { 32, new TerminalColor("#0087d7") }, // DeepSkyBlue3
+            { 33, new TerminalColor("#0087ff") }, // DodgerBlue1
+            { 34, new TerminalColor("#00af00") }, // Green3
+            { 35, new TerminalColor("#00af5f") }, // SpringGreen3
+            { 36, new TerminalColor("#00af87") }, // DarkCyan
+            { 37, new TerminalColor("#00afaf") }, // LightSeaGreen
+            { 38, new TerminalColor("#00afd7") }, // DeepSkyBlue2
+            { 39, new TerminalColor("#00afff") }, // DeepSkyBlue1
+            { 40, new TerminalColor("#00d700") }, // Green3
+            { 41, new TerminalColor("#00d75f") }, // SpringGreen3
+            { 42, new TerminalColor("#00d787") }, // SpringGreen2
+            { 43, new TerminalColor("#00d7af") }, // Cyan3
+            { 44, new TerminalColor("#00d7d7") }, // DarkTurquoise
+            { 45, new TerminalColor("#00d7ff") }, // Turquoise2
+            { 46, new TerminalColor("#00ff00") }, // Green1
+            { 47, new TerminalColor("#00ff5f") }, // SpringGreen2
+            { 48, new TerminalColor("#00ff87") }, // SpringGreen1
+            { 49, new TerminalColor("#00ffaf") }, // MediumSpringGreen
+            { 50, new TerminalColor("#00ffd7") }, // Cyan2
+            { 51, new TerminalColor("#00ffff") }, // Cyan1
+            { 52, new TerminalColor("#5f0000") }, // DarkRed
+            { 53, new TerminalColor("#5f005f") }, // DeepPink4
+            { 54, new TerminalColor("#5f0087") }, // Purple4
+            { 55, new TerminalColor("#5f00af") }, // Purple4
+            { 56, new TerminalColor("#5f00d7") }, // Purple3
+            { 57, new TerminalColor("#5f00ff") }, // BlueViolet
+            { 58, new TerminalColor("#5f5f00") }, // Orange4
+            { 59, new TerminalColor("#5f5f5f") }, // Grey37
+            { 60, new TerminalColor("#5f5f87") }, // MediumPurple4
+            { 61, new TerminalColor("#5f5faf") }, // SlateBlue3
+            { 62, new TerminalColor("#5f5fd7") }, // SlateBlue3
+            { 63, new TerminalColor("#5f5fff") }, // RoyalBlue1
+            { 64, new TerminalColor("#5f8700") }, // Chartreuse4
+            { 65, new TerminalColor("#5f875f") }, // DarkSeaGreen4
+            { 66, new TerminalColor("#5f8787") }, // PaleTurquoise4
+            { 67, new TerminalColor("#5f87af") }, // SteelBlue
+            { 68, new TerminalColor("#5f87d7") }, // SteelBlue3
+            { 69, new TerminalColor("#5f87ff") }, // CornflowerBlue
+            { 70, new TerminalColor("#5faf00") }, // Chartreuse3
+            { 71, new TerminalColor("#5faf5f") }, // DarkSeaGreen4
+            { 72, new TerminalColor("#5faf87") }, // CadetBlue
+            { 73, new TerminalColor("#5fafaf") }, // CadetBlue
+            { 74, new TerminalColor("#5fafd7") }, // SkyBlue3
+            { 75, new TerminalColor("#5fafff") }, // SteelBlue1
+            { 76, new TerminalColor("#5fd700") }, // Chartreuse3
+            { 77, new TerminalColor("#5fd75f") }, // PaleGreen3
+            { 78, new TerminalColor("#5fd787") }, // SeaGreen3
+            { 79, new TerminalColor("#5fd7af") }, // Aquamarine3
+            { 80, new TerminalColor("#5fd7d7") }, // MediumTurquoise
+            { 81, new TerminalColor("#5fd7ff") }, // SteelBlue1
+            { 82, new TerminalColor("#5fff00") }, // Chartreuse2
+            { 83, new TerminalColor("#5fff5f") }, // SeaGreen2
+            { 84, new TerminalColor("#5fff87") }, // SeaGreen1
+            { 85, new TerminalColor("#5fffaf") }, // SeaGreen1
+            { 86, new TerminalColor("#5fffd7") }, // Aquamarine1
+            { 87, new TerminalColor("#5fffff") }, // DarkSlateGray2
+            { 88, new TerminalColor("#870000") }, // DarkRed
+            { 89, new TerminalColor("#87005f") }, // DeepPink4
+            { 90, new TerminalColor("#870087") }, // DarkMagenta
+            { 91, new TerminalColor("#8700af") }, // DarkMagenta
+            { 92, new TerminalColor("#8700d7") }, // DarkViolet
+            { 93, new TerminalColor("#8700ff") }, // Purple
+            { 94, new TerminalColor("#875f00") }, // Orange4
+            { 95, new TerminalColor("#875f5f") }, // LightPink4
+            { 96, new TerminalColor("#875f87") }, // Plum4
+            { 97, new TerminalColor("#875faf") }, // MediumPurple3
+            { 98, new TerminalColor("#875fd7") }, // MediumPurple3
+            { 99, new TerminalColor("#875fff") }, // SlateBlue1
             { 100, new TerminalColor("#878700") }, // Yellow4
             { 101, new TerminalColor("#87875f") }, // Wheat4
             { 102, new TerminalColor("#878787") }, // Grey53
@@ -296,56 +247,81 @@ namespace VtNetCore.VirtualTerminal.Model
             { 252, new TerminalColor("#d0d0d0") }, // Grey82
             { 253, new TerminalColor("#dadada") }, // Grey85
             { 254, new TerminalColor("#e4e4e4") }, // Grey89
-            { 255, new TerminalColor("#eeeeee") }, // Grey93
+            { 255, new TerminalColor("#eeeeee") } // Grey93
         };
+
+        public TerminalColor()
+        {
+        }
+
+        public TerminalColor(TerminalColor other)
+        {
+            ARGB = other.ARGB;
+        }
+
+        public TerminalColor(string webColor)
+        {
+            Red = Convert.ToUInt32(webColor.Substring(1, 2), 16);
+            Green = Convert.ToUInt32(webColor.Substring(3, 2), 16);
+            Blue = Convert.ToUInt32(webColor.Substring(5, 2), 16);
+        }
+
+        public TerminalColor(ETerminalColor color, bool bright)
+        {
+            Set(color, bright);
+        }
+
+        public uint ARGB { get; set; }
 
         public uint Red
         {
-            get
-            {
-                return (ARGB >> 16) & 0xFF;
-            }
-            set
-            {
-                ARGB = (ARGB & 0xFF00FFFF) | ((value & 0xFF) << 16);
-            }
+            get => (ARGB >> 16) & 0xFF;
+            set => ARGB = (ARGB & 0xFF00FFFF) | ((value & 0xFF) << 16);
         }
 
         public uint Green
         {
-            get
-            {
-                return (ARGB >> 8) & 0xFF;
-            }
-            set
-            {
-                ARGB = (ARGB & 0xFFFF00FF) | ((value & 0xFF) << 8);
-            }
+            get => (ARGB >> 8) & 0xFF;
+            set => ARGB = (ARGB & 0xFFFF00FF) | ((value & 0xFF) << 8);
         }
 
         public uint Blue
         {
-            get
-            {
-                return ARGB & 0xFF;
-            }
-            set
-            {
-                ARGB = (ARGB & 0xFFFFFF00) | (value & 0xFF);
-            }
+            get => ARGB & 0xFF;
+            set => ARGB = (ARGB & 0xFFFFFF00) | (value & 0xFF);
         }
 
-        public string WebColor
+        public string WebColor => string.Format("#{0:X6}", ARGB);
+
+        public override bool Equals(object obj)
         {
-            get
-            {
-                return string.Format("#{0:X6}", ARGB);
-            }
+            if (this == null && obj == null)
+                return true;
+
+            if (this == null || obj == null)
+                return false;
+
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            var other = obj as TerminalColor;
+
+            return ARGB == other.ARGB;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return WebColor;
         }
 
         public void Set(int paletteIndex)
         {
-            if(Iso8613.TryGetValue(paletteIndex, out TerminalColor colorValue))
+            if (Iso8613.TryGetValue(paletteIndex, out var colorValue))
                 ARGB = colorValue.ARGB;
             else
                 ARGB = 0;
@@ -361,79 +337,75 @@ namespace VtNetCore.VirtualTerminal.Model
         public void Set(ETerminalColor termColor, bool bright)
         {
             if (bright)
-            {
                 switch (termColor)
                 {
                     case ETerminalColor.Black:
-                        Set(127, 127, 127);     // Bright black
+                        Set(127, 127, 127); // Bright black
                         break;
 
                     case ETerminalColor.Red:
-                        Set(255, 0, 0);    // Bright red
+                        Set(255, 0, 0); // Bright red
                         break;
 
                     case ETerminalColor.Green:
-                        Set(0, 255, 0);    // Bright green
+                        Set(0, 255, 0); // Bright green
                         break;
 
                     case ETerminalColor.Yellow:
-                        Set(255, 255, 0);   // Bright yellow
+                        Set(255, 255, 0); // Bright yellow
                         break;
 
                     case ETerminalColor.Blue:
-                        Set(92, 92, 255);    // Bright blue
+                        Set(92, 92, 255); // Bright blue
                         break;
 
                     case ETerminalColor.Magenta:
-                        Set(255, 0, 255);   // Bright Magenta
+                        Set(255, 0, 255); // Bright Magenta
                         break;
 
                     case ETerminalColor.Cyan:
-                        Set(0, 255, 255);   // Bright cyan
+                        Set(0, 255, 255); // Bright cyan
                         break;
 
                     case ETerminalColor.White:
-                        Set(255, 255, 255);  // Bright white
+                        Set(255, 255, 255); // Bright white
                         break;
                 }
-            }
             else
-            {
                 switch (termColor)
                 {
                     case ETerminalColor.Black:
-                        Set(12, 12, 12);        // Black
+                        Set(12, 12, 12); // Black
                         break;
 
                     case ETerminalColor.Red:
-                        Set(197, 15, 31);      // Red
+                        Set(197, 15, 31); // Red
                         break;
 
                     case ETerminalColor.Green:
-                        Set(19, 161, 14);      // Green
+                        Set(19, 161, 14); // Green
                         break;
 
                     case ETerminalColor.Yellow:
-                        Set(193, 156, 0);    // Yellow
+                        Set(193, 156, 0); // Yellow
                         break;
 
                     case ETerminalColor.Blue:
-                        Set(0, 55, 218);      // Blue
+                        Set(0, 55, 218); // Blue
                         break;
 
                     case ETerminalColor.Magenta:
-                        Set(136, 23, 152);    // Magenta
+                        Set(136, 23, 152); // Magenta
                         break;
 
                     case ETerminalColor.Cyan:
-                        Set(97, 214, 214);    // Cyan
+                        Set(97, 214, 214); // Cyan
                         break;
 
                     case ETerminalColor.White:
-                        Set(204, 204, 204);  // White
+                        Set(204, 204, 204); // White
                         break;
                 }
-            }
         }
     }
 }
