@@ -27,10 +27,12 @@ namespace VtNetCore.VirtualTerminal
         public static readonly string ConformanceLevelResponse = "\u0090$r64\u009c"; // VT420 compliance?
 
         public static readonly string Vt52Identification = "\u001b/Z";
+        private readonly TerminalLines alternativeBuffer = new TerminalLines();
+
+        private readonly TerminalLines normalBuffer = new TerminalLines();
 
         private char[] _rawText;
         private int _rawTextLength;
-        private readonly TerminalLines alternativeBuffer = new TerminalLines();
 
         private int alternativeBufferTopRow;
 
@@ -39,7 +41,6 @@ namespace VtNetCore.VirtualTerminal
         /// </summary>
         public TextPosition LastMousePosition = new TextPosition(-1, -1);
 
-        private readonly TerminalLines normalBuffer = new TerminalLines();
         private int normalBufferTopRow;
 
         /// <summary>
