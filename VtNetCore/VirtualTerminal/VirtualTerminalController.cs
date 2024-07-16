@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using VtNetCore.VirtualTerminal.Encodings;
 using VtNetCore.VirtualTerminal.Enums;
@@ -674,7 +675,7 @@ namespace VtNetCore.VirtualTerminal
         {
             LogExtreme("Carriage return");
             
-            if (CursorState.CurrentColumn >= CurrentLineColumns && CursorState.WordWrap)
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && CursorState.CurrentColumn >= CurrentLineColumns && CursorState.WordWrap)
             {
                 NewLine();
             }
