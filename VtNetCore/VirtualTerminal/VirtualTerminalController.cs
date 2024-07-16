@@ -673,6 +673,11 @@ namespace VtNetCore.VirtualTerminal
         public void CarriageReturn()
         {
             LogExtreme("Carriage return");
+            
+            if (CursorState.CurrentColumn >= CurrentLineColumns && CursorState.WordWrap)
+            {
+                NewLine();
+            }
 
             CursorState.CurrentColumn = 0;
             ChangeCount++;
@@ -1054,14 +1059,13 @@ namespace VtNetCore.VirtualTerminal
 
                 line.Insert(CursorState.CurrentColumn, new TerminalCharacter());
             }
-
+            
             if (CursorState.CurrentColumn >= CurrentLineColumns && CursorState.WordWrap)
             {
                 CursorState.CurrentColumn = 0;
                 NewLine();
             }
-
-
+            
             LastCharacter = SetCharacter(CursorState.CurrentColumn, CursorState.CurrentRow, character,
                 CursorState.Attributes).Clone();
             CursorState.CurrentColumn++;
