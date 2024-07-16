@@ -1879,7 +1879,9 @@ namespace VtNetCore.VirtualTerminal
             }
 
             TopRow = Buffer.Count;
-            while (TopRow > MaximumHistoryLines)
+            
+            //Remove all rows from buffer
+            while (TopRow > 0)
             {
                 Buffer.RemoveAt(0);
                 TopRow--;
