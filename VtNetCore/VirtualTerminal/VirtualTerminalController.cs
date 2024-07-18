@@ -2605,6 +2605,9 @@ namespace VtNetCore.VirtualTerminal
                 endRow = holder;
             }
 
+            if (startColumn < 0) startColumn = 0;
+            if (startRow < 0) startRow = 0;
+
             var result = "";
 
             if (startRow >= Buffer.Count)
