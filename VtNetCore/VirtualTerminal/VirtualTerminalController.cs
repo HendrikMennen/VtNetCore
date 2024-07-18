@@ -674,11 +674,6 @@ namespace VtNetCore.VirtualTerminal
         public void CarriageReturn()
         {
             LogExtreme("Carriage return");
-            
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && CursorState.CurrentColumn >= CurrentLineColumns && CursorState.WordWrap)
-            {
-                NewLine();
-            }
 
             CursorState.CurrentColumn = 0;
             ChangeCount++;
