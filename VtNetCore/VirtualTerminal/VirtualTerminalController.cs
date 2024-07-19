@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -1014,6 +1015,36 @@ namespace VtNetCore.VirtualTerminal
             LastCharacter = null;
         }
 
+        private static bool IsFullWidthChar(char c)
+        {
+            if (c == 62694) return true;
+            
+            return (c >= 0x1100 &&
+                    (c <= 0x115f ||  // Hangul Jamo init. consonants
+                     c == 0x2329 || c == 0x232a ||
+                     (c >= 0x2e80 && c <= 0xa4cf &&
+                      c != 0x303f) || // CJK ... Yi
+                     (c >= 0xac00 && c <= 0xd7a3) || // Hangul Syllables
+                     (c >= 0xf900 && c <= 0xfaff) || // CJK Compatibility Ideographs
+                     (c >= 0xfe10 && c <= 0xfe19) || // Vertical forms
+                     (c >= 0xfe30 && c <= 0xfe6f) || // CJK Compatibility Forms
+                     (c >= 0xff00 && c <= 0xff60) || // Fullwidth Forms
+                     (c >= 0xffe0 && c <= 0xffe6) ||
+                     (c >= 0x20000 && c <= 0x2fffd) ||
+                     (c >= 0x30000 && c <= 0x3fffd)));
+        }
+        
+        private static int GetCharacterWidth(char c)
+        {
+            switch (c)
+            {
+                case '\0':
+                    return 0;
+                default:
+                    return IsFullWidthChar(c) ? 2 : 1;
+            }
+        }
+        
         public void PutChar(char character)
         {
             LogExtreme("PutChar(ch:'" + character + "'=" + (int)character + ")");
@@ -1064,7 +1095,8 @@ namespace VtNetCore.VirtualTerminal
             
             LastCharacter = SetCharacter(CursorState.CurrentColumn, CursorState.CurrentRow, character,
                 CursorState.Attributes).Clone();
-            CursorState.CurrentColumn++;
+            
+            CursorState.CurrentColumn += GetCharacterWidth(character);
 
             if (CursorState.CurrentColumn >= CurrentLineColumns && !CursorState.WordWrap)
                 CursorState.CurrentColumn = CurrentLineColumns - 1;
